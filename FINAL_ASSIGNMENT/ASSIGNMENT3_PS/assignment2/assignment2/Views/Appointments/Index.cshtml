@@ -1,0 +1,77 @@
+﻿@model IEnumerable<assignment2.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Register Appointment</a>
+    <a asp-action="Index" class="btn btn-primary">Show All</a>
+    <a asp-action="Report" class="btn btn-primary">Report</a>
+    <a asp-action="Export" asp-route-type ="0"class="btn btn-primary">Export JSON</a>
+    <a asp-action="Export" asp-route-type ="1" class="btn btn-primary">Export CSV</a>
+</p>
+<form asp-controller="Appointments" asp-action="Index">
+    <p>
+        Name: <input type="text" name="SearchString">
+        <input type="submit" value="Search" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.clientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.telephoneNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.carBrand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.clientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.telephoneNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.carBrand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @if (item.status <= 0)
+                { <div class="alert alert-danger" role="alert">Unsolved</div>}
+                else {<div class="alert alert-success" role="alert">Solved</div> }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BsonID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BsonID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BsonID">Delete</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
